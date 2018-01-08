@@ -4,7 +4,7 @@ A system for creating interactive SMS sessions. It stores SMS sessions in CouchD
 
 ## How to deploy
 * Clone it
-* Install the required Ruby gems
+* Install the required Ruby gems (run bundle)
 * Install couchdb
 * Install couchappp
 * Push code in couchapp directory to your couchdb
