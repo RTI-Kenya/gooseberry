@@ -158,7 +158,7 @@ class ValidationHelpers
 
   def self.valid_schools
     begin
-      $db.get 'Schools In Kenya'
+      $db.get('Schools In Kenya')["schools"]
     rescue
       nil
     end
@@ -178,5 +178,29 @@ class ValidationHelpers
     return nil if self.valid_schools.include? school_name.upcase
     closest_match = FuzzyMatch.new(valid_schools).find(school_name.upcase)
     return "#{school_name} is not a valid school. Do you mean #{closest_match}?"
+  end
+
+  def self.valid_zones
+    begin
+      $db.get('Tayari Zones')["zones"]
+    rescue
+      nil
+    end
+  end
+
+  def self.closest_valid_zone_match(zone_name)
+    return zone_name.upcase if self.valid_zones.include? zone_name.upcase
+    return FuzzyMatch.new(self.valid_zone).find(zone_name.upcase)
+  end
+
+  # Poorly named
+  def self.closest_zone_match(zone_name)
+    self.closest_valid_zone_match(zone_name)
+  end
+
+  def self.error_from_invalid_kenya_zone(zone_name)
+    return nil if self.valid_zones.include? zone_name.upcase
+    closest_match = FuzzyMatch.new(valid_zones).find(zone_name.upcase)
+    return "#{school_name} is not a valid zone. Do you mean #{closest_match}?"
   end
 end
